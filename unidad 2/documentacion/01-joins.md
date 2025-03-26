@@ -1,5 +1,6 @@
  # inner joins
 
+```sql
 ![inner join](../img/inner%20join.png)
 
 -- seleccionar todos las categorias y productos 
@@ -376,5 +377,6 @@ on od.OrderID = o.OrderID
 group by c.CompanyName
 having sum(od.Quantity * od.UnitPrice) between 500 and 2000
 
-```sql
+
 -- LEFT JOIN, RIGHT JOIN, FULL JOIN y CROSS JOIN
+```
