@@ -510,7 +510,145 @@ db.libros.find({titulo:/j/})
 
 ## operador $regex
 [operador $regex](https://www.mongodb.com/docs/manual/reference/operator/query/regex/)
+- Seleccionar los libros que contengan la palabra 'para' en el titulo 
+db.libros.find(
+    {
+        titulo:{
+            $regex:'para'
+        }
+    }
+)
+
+db.libros.find(
+    {
+        titulo:{
+            $regex:/para/
+        }
+    }
+)
+
+seleccionar todos los libros que contengan la palabra JSON
+
+db.libros.find(
+    {
+        titulo:{
+            $regex:'JSON'
+        }
+    }
+)
+
+db.libros.find(
+    {
+        titulo:{
+            $regex:/JSON/
+        }
+    }
+)
+
+- DISTINGIR ENTRE MAYUSCULAS Y MINUSCULAS
+
+db.libros.find(
+    {
+        titulo:{
+            $regex:/json/i
+        }
+    }
+)
+
+{ <field>: { $regex: /pattern/, $options: '<options>' } }
+db.libros.find(
+    {
+        titulo:{
+            $regex:/json/,$options:'i'
+        }
+    }
+)
+
+-Seleccionar todos los documentos de libros donde el titulo comience con j y no distinga entre mayusculas y minusculas
+
+db.libros.find(
+    {
+        titulo:{
+            $regex:/^j/,$options:'i'
+        }
+    }
+).size()
+
+-Seleccionar todos los documentos de libros donde el titulo termine con 'es' y no distinga entre mayusculas y minusculas
+db.libros.find(
+    {
+        titulo:{
+            $regex:/es$/,$options:'i'
+        }
+    }
+)
 
 ## Metodo sort (ordenar documentos)
+-- Ordenar los libros de manera ascendente por el precio
+db.libros.find(
+    {
+
+    }, {
+        _id:0,
+        titulo:1,
+        precio:1
+    }
+).sort({precio:1})
+-- Ordenar los libros de manera descendente por el precio
+db.libros.find(
+    {
+
+    }, {
+        _id:0,
+        titulo:1,
+        precio:1
+    }
+).sort({precio:-1})
+
+-ordenar los libros de manera ascendente por la editorial y de manera descendente por el precio mostrando el titulo, el precio y la editorial
+db.libros.find(
+    {
+
+    }, {
+        
+        titulo:1,
+        precio:1,
+        editorial:1
+    }
+).sort({precio:1},{precio:-1})
+
+db.libros.find(
+    {},{
+        _id:0,
+        precio:1,
+        editorial:1
+    }
+).sort(
+
+    {
+        editorial:1,
+        precio:-1
+    }
+)
 ## otros metodos skip, limit, size
+- metodo size
+db.libros.find({}).size()
+db.libros.find(
+    {
+        titulo:{
+            $regex:/^j/,$options:'i'
+        }
+    }
+).size()
+
+-limit
+-- buscar todos los libros pero mostrando los dos primeros
+db.libros.find({}).limit(2)
+
+-skip 
+db.libros.find({}).skip(2)
 # Borrar collecciones y base de datos
+
+db.libros.drop
+
+db.dropDatabase()
